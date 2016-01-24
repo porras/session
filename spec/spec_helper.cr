@@ -1,2 +1,2 @@
 require "spec"
-require "../src/session"
+require "../src/session/handler"

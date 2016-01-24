@@ -10,11 +10,11 @@ module Session
     end
 
     def encode(data : String)
-      Base64.encode "#{Base64.encode(data)}--#{generate_signature(data)}"
+      Base64.encode(data) + "--" + generate_signature(data)
     end
 
     def decode(data : String)
-      data, signature = Base64.decode_string(data).split("--")
+      data, signature = data.split("--")
       Base64.decode_string(data).tap do |data|
         raise BadData.new("Signature does not match") unless generate_signature(data) == signature
       end
