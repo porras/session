@@ -1,5 +1,6 @@
 require "openssl/hmac"
 require "base64"
+require "crypto/md5"
 
 module Session
   class Encoder
@@ -22,6 +23,10 @@ module Session
 
     private def generate_signature(data)
       OpenSSL::HMAC.hexdigest(:sha1, @secret, data)
+    end
+
+    def hex_digest(data)
+      Crypto::MD5.hex_digest(data)
     end
   end
 end

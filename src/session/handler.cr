@@ -29,8 +29,9 @@ module Session
 
     def call(context)
       context.session = load_session(context.request.cookies) || Session(T).new
+      checksum = @encoder.hex_digest(context.session.to_json)
       call_next(context)
-      store_session(context.response, context.session)
+      store_session(context.response, context.session, checksum)
     end
 
     private def load_session(cookies)
@@ -43,8 +44,10 @@ module Session
       end
     end
 
-    private def store_session(response, session)
-      response.set_cookie(@session_key, @encoder.encode(session.to_json))
+    private def store_session(response, session, checksum)
+      data = session.to_json
+      return if checksum == @encoder.hex_digest(data)
+      response.set_cookie(@session_key, @encoder.encode(data))
     end
   end
 end
