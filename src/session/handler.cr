@@ -1,5 +1,6 @@
 require "http/server"
 require "./cookies"
+require "./encoder"
 require "json"
 
 class HTTP::Server::Context
@@ -20,7 +21,8 @@ module Session
   end
 
   class Handler < HTTP::Handler
-    def initialize(@session_key = "cr.session")
+    def initialize(@session_key = "cr.session", secret = raise("Please set a secret"))
+      @encoder = Encoder.new(secret)
     end
 
     def call(context)
@@ -31,12 +33,16 @@ module Session
 
     private def load_session(cookies)
       if cookie = cookies[@session_key]?
-        Session.from_json(cookie.value)
+        begin
+          Session.from_json(@encoder.decode(cookie.value))
+        rescue Encoder::BadData
+          Session.new
+        end
       end
     end
 
     private def store_session(response, session)
-      response.set_cookie(@session_key, session.to_json)
+      response.set_cookie(@session_key, @encoder.encode(session.to_json))
     end
   end
 end

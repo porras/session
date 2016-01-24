@@ -17,7 +17,7 @@ p app
 server = HTTP::Server.new("0.0.0.0", "3000", [
   HTTP::LogHandler.new,
   HTTP::ErrorHandler.new,
-  Session::Handler.new,
+  Session::Handler.new(secret: "wadus"),
   app,
 ])
 
