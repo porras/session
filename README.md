@@ -43,7 +43,7 @@ server = HTTP::Server.new("0.0.0.0", "3000", [
   HTTP::ErrorHandler.new,
   session_handler,
 ]) do |context|
-  # context.session is a Session::Handler(Hash(String, String)), behaves like a Hash(String, String)
+  # context.session is a Hash(String, String)
   context.session["first_seen_at"] ||= Time.now.to_s
   context.response.print "You came first at #{context.session["first_seen_at"]}"
 end
