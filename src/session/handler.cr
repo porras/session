@@ -8,25 +8,27 @@ class HTTP::Server::Context
 end
 
 module Session
-  class Session
-    JSON.mapping({content: Hash(String, String)})
+  class Session(T)
+    JSON.mapping({_v: T})
+
+    forward_missing_to _v
 
     def initialize
-      @content = {} of String => String
+      @_v = T.new
     end
 
-    def []=(key, value)
-      @content[key] = value
+    def store(value : T)
+      self._v = value
     end
   end
 
-  class Handler < HTTP::Handler
+  class Handler(T) < HTTP::Handler
     def initialize(@session_key = "cr.session", secret = raise("Please set a secret"))
       @encoder = Encoder.new(secret)
     end
 
     def call(context)
-      context.session = load_session(context.request.cookies) || Session.new
+      context.session = load_session(context.request.cookies) || Session(T).new
       call_next(context)
       store_session(context.response, context.session)
     end
@@ -34,9 +36,9 @@ module Session
     private def load_session(cookies)
       if cookie = cookies[@session_key]?
         begin
-          Session.from_json(@encoder.decode(cookie.value))
+          Session(T).from_json(@encoder.decode(cookie.value))
         rescue Encoder::BadData
-          Session.new
+          Session(T).new
         end
       end
     end
