@@ -4,6 +4,8 @@ Session is a [Crystal](http://crystal-lang.org/)'s `HTTP::Handler` that implemen
 
 It takes a lot of inspiration from [`Rack::Session::Cookie`](https://github.com/rack/rack/blob/master/lib/rack/session/cookie.rb), but it's much smaller, simpler, and obviously less feature-rich. Also less widespread and tested, but you can help with that!
 
+> ** *WARNING:* ** *this is work in progress and most likely contains security, performance and other kinds of issues I'm working on finding and fixing. I don't use it in production and you shouldn't either.*
+
 ## Installation
 
 Add this to your application's `shard.yml`:
@@ -67,10 +69,6 @@ server.listen
 ```
 
 ### Kemal example
-
-TODO
-
-### Security
 
 TODO
 
