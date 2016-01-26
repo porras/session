@@ -1,10 +1,10 @@
 # Session
 
-Session is a [Crystal](http://crystal-lang.org/)'s `HTTP::Handler` that implement's cookie based sessions. It can be combined with other bultin or custom handlers, as well as with other Crystal libraries that implement `HTTP::Handler`s such as [kemal](https://github.com/sdogruyol/kemal).
+Session is a [Crystal](http://crystal-lang.org/)'s `HTTP::Handler` that implements cookie based sessions. It can be combined with other bultin or custom handlers, as well as with other Crystal libraries that implement `HTTP::Handler`s such as [kemal](https://github.com/sdogruyol/kemal).
 
 It takes a lot of inspiration from [`Rack::Session::Cookie`](https://github.com/rack/rack/blob/master/lib/rack/session/cookie.rb), but it's much smaller, simpler, and obviously less feature-rich. Also less widespread and tested, but you can help with that!
 
-> ** *WARNING:* ** *this is work in progress and most likely contains security, performance and other kinds of issues I'm working on finding and fixing. I don't use it in production and you shouldn't either.*
+> ** *WARNING:* ** *this is **work in progress** and most likely contains security, performance and other kinds of issues I'm working on finding and fixing. I don't use it in production and you shouldn't either.*
 
 ## Installation
 
@@ -45,7 +45,7 @@ Once you instantiate the handler passing the underlying type and the wanted opti
 ### Options
 
 * **`secret`** (mandatory): the content of the session cookie are **not encrypted** but *signed*. That is, a user could read the contents (provided that they know the algorithim, which is available in the source code, and pretty simple), but not change it (because the signature wouldn't match). This secret is used for that.
-* **`session_key`** (defaults to `"cr.session"`): name of the cookie were the data will be stored.
+* **`session_key`** (defaults to `"cr.session"`): name of the cookie where the data will be stored.
 
 ### Raw HTTP::Handler example
 
