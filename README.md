@@ -1,4 +1,4 @@
-# Session
+# Session [![Build Status](https://travis-ci.org/porras/session.svg?branch=master)](https://travis-ci.org/porras/session)
 
 Session is a [Crystal](http://crystal-lang.org/)'s `HTTP::Handler` that implements cookie based sessions. It can be combined with other bultin or custom handlers, as well as with other Crystal libraries that implement `HTTP::Handler`s such as [kemal](https://github.com/sdogruyol/kemal).
 
