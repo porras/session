@@ -51,7 +51,7 @@ Once you instantiate the handler passing the underlying type and the wanted opti
 
 ```crystal
 require "http/server"
-require "session/handler"
+require "session"
 
 session_handler = Session::Handler(Hash(String, String)).new(secret: "SUPERSECRET")
 

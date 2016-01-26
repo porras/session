@@ -1,5 +1,5 @@
 require "http/server"
-require "./src/session/handler"
+require "./src/session"
 
 # Every request increments the visits counter
 # Requests with the parameter "store" store that value
