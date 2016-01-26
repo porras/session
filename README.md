@@ -21,7 +21,22 @@ dependencies:
 * Serializable to JSON, either because it's a bultin type that is, or via `JSON.mapping` if it's a custom type
 * Initializable without parameters
 
-`Hash(String, String)` makes a sensible yet simple and flexible example.
+`Hash(String, String)` makes a sensible yet simple and flexible example. A more strict alternative can be a class whose attributes are nilable so you can define an empty initializer (or provide defaults on it):
+
+```crystal
+class MySession
+  JSON.mapping({
+    time:   {type: String, key: "t", nilable: true},
+    visits: {type: Int32, key: "v"},
+  })
+
+  def initialize
+    @visits = 0
+  end
+end
+```
+
+Providing a shorter key helps keeping the cookie size small.
 
 Once you instantiate the handler passing the underlying type and the wanted options (see below), and you put it in the HTTP handlers chain, all downstream handlers will have a `context.session` available to read and update.
 
