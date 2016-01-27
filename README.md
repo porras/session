@@ -76,6 +76,7 @@ You can easily integrate with [Kemal](https://github.com/sdogruyol/kemal).
 
 ```crystal
 require "kemal"
+require "session"
 
 session_handler = Session::Handler(Hash(String, String)).new(secret: "SUPERSECRET")
 # Add session_handler to Kemal handlers
@@ -83,9 +84,8 @@ add_handler session_handler
 
 get "/" do |env|
   env.session["first_seen_at"] ||= Time.now.to_s
-  "You came first at #{env.session["first_seen_at"]}  
+  "You came first at #{env.session["first_seen_at"]}"
 end
-
 ```
 
 ## Contributing
